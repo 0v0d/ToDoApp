@@ -1,9 +1,7 @@
 package com.example.todoapp.view
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -11,7 +9,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,8 +29,6 @@ import com.example.todoapp.utility.DateUtility
 fun TaskForm(
     task: Task? = null,
     onSaveClick: (Task) -> Unit,
-    onBackClick: () -> Unit,
-    @StringRes appBarTitleID: Int,
     modifier: Modifier
 ) {
     var title by remember { mutableStateOf(task?.title ?: "") }
@@ -41,130 +36,120 @@ fun TaskForm(
     var completed by remember { mutableStateOf(task?.completed ?: false) }
     var dueDate by remember { mutableStateOf(task?.dueDate) }
 
-    var titleError by remember { mutableStateOf<String?>(null) }
+    var titleError by remember { mutableStateOf(false) }
 
     val (showDatePicker, setShowDatePicker) = remember { mutableStateOf(false) }
     val (showTimePicker, setShowTimePicker) = remember { mutableStateOf(false) }
 
-    Scaffold(
-        topBar = {
-            AppBarTemplate(
-                titleID = appBarTitleID,
-                onBackClick = { onBackClick() },
-                modifier = modifier.fillMaxWidth()
-            )
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp)
-        ) {
-            OutlinedTextField(
-                value = title,
-                onValueChange = {
-                    title = it
-                    titleError = null
-                },
-                label = { Text(stringResource(R.string.task_form_task_title)) },
-                isError = titleError != null,
-                supportingText = {
-                    if (titleError != null) {
-                        Text(
-                            text = "Title is required",
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-            )
-
-            OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
-                label = { Text(stringResource(R.string.task_form_task_description)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-                    .padding(bottom = 16.dp)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(R.string.task_form_task_due_date),
-                    modifier = Modifier.padding(end = 16.dp)
-                )
-                Text(
-                    text = dueDate?.let { DateUtility().getFormattedDate(it) }
-                        ?: stringResource(R.string.task_form_task_undecided),
-                    modifier = Modifier.weight(1f)
-                )
-                Button(
-                    onClick = { setShowDatePicker(true) },
-                    modifier = Modifier.padding(start = 16.dp)
-                ) {
-                    Text(stringResource(R.string.task_form_task_date_select_button))
-                }
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    checked = completed,
-                    onCheckedChange = { completed = it }
-                )
-                Text(stringResource(R.string.task_form_task_completed))
-            }
-
-            Button(
-                onClick = {
-                    val newTask = Task(
-                        id = task?.id ?: "",
-                        title = title,
-                        description = description,
-                        completed = completed,
-                        dueDate = dueDate
+    Column(
+        modifier = modifier.padding(16.dp),
+    ) {
+        OutlinedTextField(
+            value = title,
+            onValueChange = {
+                title = it
+            },
+            label = { Text(stringResource(R.string.task_form_task_title)) },
+            supportingText = {
+                if (titleError) {
+                    Text(
+                        text = "Title is required",
+                        color = MaterialTheme.colorScheme.error
                     )
-                    onSaveClick(newTask)
-                },
-                modifier = Modifier.fillMaxWidth()
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+
+        OutlinedTextField(
+            value = description,
+            onValueChange = { description = it },
+            label = { Text(stringResource(R.string.task_form_task_description)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .padding(bottom = 16.dp)
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(R.string.task_form_task_due_date),
+                modifier = Modifier.padding(end = 16.dp)
+            )
+            Text(
+                text = dueDate?.let { DateUtility().getFormattedDate(it) }
+                    ?: stringResource(R.string.task_form_task_undecided),
+                modifier = Modifier.weight(1f)
+            )
+            Button(
+                onClick = { setShowDatePicker(true) },
+                modifier = Modifier.padding(start = 16.dp)
             ) {
-                Text(stringResource(R.string.task_form_task_save))
+                Text(stringResource(R.string.task_form_task_date_select_button))
             }
         }
 
-        if (showDatePicker) {
-            DatePickerDialog(
-                onDismissRequest = { setShowDatePicker(false) },
-                onDateSelected = { selectedDate ->
-                    dueDate = selectedDate
-                    setShowDatePicker(false)
-                    setShowTimePicker(true)
-                }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Checkbox(
+                checked = completed,
+                onCheckedChange = { completed = it }
             )
+            Text(stringResource(R.string.task_form_task_completed))
         }
 
-        if (showTimePicker) {
-            TimePickerDialog(
-                onDismissRequest = { setShowTimePicker(false) },
-                onDateSelected = { selectedDate ->
-                    dueDate = selectedDate
-                    setShowTimePicker(false)
+        Button(
+            onClick = {
+                val newTask = Task(
+                    id = task?.id ?: "",
+                    title = title,
+                    description = description,
+                    completed = completed,
+                    dueDate = dueDate
+                )
+
+                if (title.isNotEmpty()) {
+                    onSaveClick(newTask)
+                } else {
+                    titleError = true
                 }
-            )
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(stringResource(R.string.task_form_task_save))
         }
+    }
+
+    if (showDatePicker) {
+        DatePickerDialog(
+            onDismissRequest = { setShowDatePicker(false) },
+            onDateSelected = { selectedDate ->
+                dueDate = selectedDate
+                setShowDatePicker(false)
+                setShowTimePicker(true)
+            }
+        )
+    }
+
+    if (showTimePicker) {
+        TimePickerDialog(
+            onDismissRequest = { setShowTimePicker(false) },
+            onDateSelected = { selectedDate ->
+                dueDate = selectedDate
+                setShowTimePicker(false)
+            }
+        )
     }
 }
 
@@ -174,8 +159,6 @@ fun TaskFormPreview() {
     MaterialTheme {
         TaskForm(
             onSaveClick = {},
-            onBackClick = {},
-            appBarTitleID = R.string.nav_label_add_task_title,
             modifier = Modifier
         )
     }
@@ -187,8 +170,6 @@ fun TaskFormPreviewDarkMode() {
     AppTheme(darkTheme = true) {
         TaskForm(
             onSaveClick = {},
-            onBackClick = {},
-            appBarTitleID = R.string.nav_label_add_task_title,
             modifier = Modifier
         )
     }
