@@ -1,10 +1,10 @@
 package com.example.todoapp.di
 
-import com.example.todoapp.repository.TaskRepository
-import com.example.todoapp.usecase.DeleteTaskUseCase
-import com.example.todoapp.usecase.GetTaskListUseCase
-import com.example.todoapp.usecase.SaveTaskUseCase
-import com.example.todoapp.usecase.UpdateTaskUseCase
+import com.example.todoapp.data.repository.TaskRepository
+import com.example.todoapp.domain.usecase.DeleteTaskUseCase
+import com.example.todoapp.domain.usecase.GetTaskListUseCase
+import com.example.todoapp.domain.usecase.SaveTaskUseCase
+import com.example.todoapp.domain.usecase.UpdateTaskUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

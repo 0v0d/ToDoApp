@@ -1,8 +1,8 @@
-package com.example.todoapp.usecase
+package com.example.todoapp.domain.usecase
 
-import com.example.todoapp.model.TaskDomain
-import com.example.todoapp.model.toEntity
-import com.example.todoapp.repository.TaskRepository
+import com.example.todoapp.data.repository.model.TaskDomain
+import com.example.todoapp.data.repository.TaskRepository
+import com.example.todoapp.utility.toEntity
 import javax.inject.Inject
 
 

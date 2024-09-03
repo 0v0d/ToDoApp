@@ -1,5 +1,6 @@
 package com.example.todoapp.navigation
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -7,11 +8,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.todoapp.model.TaskDomain
-import com.example.todoapp.view.AddTaskFromScreen
-import com.example.todoapp.view.EditTaskFormScreen
-import com.example.todoapp.view.TodoAppScreen
-import com.example.todoapp.view.TodoListScreen
+import com.example.todoapp.data.repository.model.TaskDomain
+import com.example.todoapp.ui.screen.AddTaskFromScreen
+import com.example.todoapp.ui.screen.EditTaskFormScreen
+import com.example.todoapp.ui.TodoAppScreen
+import com.example.todoapp.ui.screen.TodoListScreen
 import com.google.gson.Gson
 
 @Composable
@@ -30,10 +31,8 @@ fun NavigationGraph(
                     navController.navigateSingleTopTo(TodoAppScreen.AddTask.name)
                 },
                 onTaskClick = { taskDomain ->
-                    val taskJson = Gson().toJson(taskDomain)
-                    navController.navigateSingleTopTo(
-                        "${TodoAppScreen.EditTask.name}/$taskJson"
-                    )
+                    val taskJson = Uri.encode(Gson().toJson(taskDomain))
+                    navController.navigateSingleTopTo("${TodoAppScreen.EditTask.name}/$taskJson")
                 },
             )
         }

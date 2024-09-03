@@ -1,7 +1,7 @@
-package com.example.todoapp.usecase
+package com.example.todoapp.domain.usecase
 
-import com.example.todoapp.model.Task
-import com.example.todoapp.repository.TaskRepository
+import com.example.todoapp.data.repository.model.Task
+import com.example.todoapp.data.repository.TaskRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -3,12 +3,11 @@ package com.example.todoapp.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.todoapp.model.Task
-import com.example.todoapp.model.TaskDomain
-import com.example.todoapp.model.toDomain
-import com.example.todoapp.usecase.DeleteTaskUseCase
-import com.example.todoapp.usecase.GetTaskListUseCase
-import com.example.todoapp.usecase.UpdateTaskOrderUseCase
+import com.example.todoapp.data.repository.model.TaskDomain
+import com.example.todoapp.domain.usecase.DeleteTaskUseCase
+import com.example.todoapp.domain.usecase.GetTaskListUseCase
+import com.example.todoapp.domain.usecase.UpdateTaskOrderUseCase
+import com.example.todoapp.utility.toDomain
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

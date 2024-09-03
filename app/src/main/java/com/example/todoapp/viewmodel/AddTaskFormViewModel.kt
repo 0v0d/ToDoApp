@@ -2,8 +2,8 @@ package com.example.todoapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.todoapp.model.Task
-import com.example.todoapp.usecase.SaveTaskUseCase
+import com.example.todoapp.data.repository.model.Task
+import com.example.todoapp.domain.usecase.SaveTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

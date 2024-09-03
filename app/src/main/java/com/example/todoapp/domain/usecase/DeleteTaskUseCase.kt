@@ -1,6 +1,6 @@
-package com.example.todoapp.usecase
+package com.example.todoapp.domain.usecase
 
-import com.example.todoapp.repository.TaskRepository
+import com.example.todoapp.data.repository.TaskRepository
 import javax.inject.Inject
 
 class DeleteTaskUseCase @Inject constructor(

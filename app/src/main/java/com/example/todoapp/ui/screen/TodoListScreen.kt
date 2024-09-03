@@ -1,4 +1,4 @@
-package com.example.todoapp.view
+package com.example.todoapp.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,7 +37,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todoapp.R
-import com.example.todoapp.model.TaskDomain
+import com.example.todoapp.data.repository.model.TaskDomain
+import com.example.todoapp.ui.common.DismissibleItem
 import com.example.todoapp.viewmodel.TodoListViewModel
 
 @Composable
@@ -58,7 +59,6 @@ fun TodoListScreen(
         tasks = taskList,
         isLoading = loadingState,
         onAddTask = onAddTask,
-        onEditMode = {},
         onTaskClick = onTaskClick,
         modifier = modifier,
         onDismiss = { id ->
@@ -72,7 +72,6 @@ fun TodoListContent(
     tasks: List<TaskDomain>,
     isLoading: Boolean,
     onAddTask: () -> Unit,
-    onEditMode: () -> Unit,
     onTaskClick: (TaskDomain) -> Unit,
     onDismiss: (String) -> Unit,
     modifier: Modifier

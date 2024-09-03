@@ -1,11 +1,11 @@
-package com.example.todoapp.view.preview
+package com.example.todoapp.ui.preview
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.theme.AppTheme
-import com.example.todoapp.view.TaskForm
+import com.example.todoapp.ui.component.TaskForm
 
 @Preview(showBackground = true)
 @Composable
