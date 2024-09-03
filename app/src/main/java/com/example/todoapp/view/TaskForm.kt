@@ -18,11 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.todoapp.R
 import com.example.todoapp.model.Task
-import com.example.todoapp.theme.AppTheme
 import com.example.todoapp.utility.DateUtility
 
 @Composable
@@ -153,24 +151,3 @@ fun TaskForm(
     }
 }
 
-@Composable
-@Preview
-fun TaskFormPreview() {
-    MaterialTheme {
-        TaskForm(
-            onSaveClick = {},
-            modifier = Modifier
-        )
-    }
-}
-
-@Composable
-@Preview
-fun TaskFormPreviewDarkMode() {
-    AppTheme(darkTheme = true) {
-        TaskForm(
-            onSaveClick = {},
-            modifier = Modifier
-        )
-    }
-}
