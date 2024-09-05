@@ -32,7 +32,7 @@ navigationCompose = "2.7.7"
 hiltNavigationCompose = "1.2.0"
 lifecycleRuntimeKtx = "2.8.4"
 uiTestManifest = "1.6.8"
-uiTooling = "1.6.8"
+uiTooling = "1.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
