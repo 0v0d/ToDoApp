@@ -1,7 +1,7 @@
 package com.example.todoapp.di
 
-import com.example.todoapp.repository.TaskRepository
-import com.example.todoapp.repository.TaskRepositoryImpl
+import com.example.todoapp.data.repository.TaskRepository
+import com.example.todoapp.data.repository.TaskRepositoryImpl
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.example.todoapp.view
+package com.example.todoapp.ui.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
@@ -69,9 +69,8 @@ fun <T> DismissibleItem(
                     },
                     orientation = Orientation.Horizontal,
                     onDragStopped = {
-                        if (!isDismissed.value) {
-                            offsetX = 0f
-                        }
+                        if (isDismissed.value) return@draggable
+                        offsetX = 0f
                     }
                 )
         ) {
@@ -79,6 +78,7 @@ fun <T> DismissibleItem(
         }
     }
 }
+
 
 @Composable
 fun DismissBackground(

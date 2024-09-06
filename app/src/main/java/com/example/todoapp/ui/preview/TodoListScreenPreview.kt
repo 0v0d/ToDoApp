@@ -1,12 +1,12 @@
-package com.example.todoapp.view.preview
+package com.example.todoapp.ui.preview
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.todoapp.model.TaskDomain
+import com.example.todoapp.data.repository.model.TaskDomain
 import com.example.todoapp.theme.AppTheme
-import com.example.todoapp.view.TodoListContent
+import com.example.todoapp.ui.screen.TodoListContent
 
 val taskList = listOf(
     TaskDomain(
@@ -35,7 +35,6 @@ fun TodoListContentPreview() {
             tasks = taskList,
             isLoading = false,
             onAddTask = {},
-            onEditMode = {},
             onTaskClick = {},
             onDismiss = {},
             modifier = Modifier.fillMaxSize()
@@ -51,7 +50,6 @@ fun TodoListContentPreviewDarkMode() {
             tasks = taskList,
             isLoading = false,
             onAddTask = {},
-            onEditMode = {},
             onTaskClick = {},
             onDismiss = {},
             modifier = Modifier.fillMaxSize()
@@ -67,7 +65,6 @@ fun TodoListContentNoItemPreview() {
             tasks = emptyList(),
             isLoading = false,
             onAddTask = {},
-            onEditMode = {},
             onTaskClick = {},
             onDismiss = {},
             modifier = Modifier.fillMaxSize()
@@ -83,7 +80,6 @@ fun TodoListContentPreviewNoItemDarkMode() {
             tasks = emptyList(),
             isLoading = false,
             onAddTask = {},
-            onEditMode = {},
             onTaskClick = {},
             onDismiss = {},
             modifier = Modifier.fillMaxSize()
@@ -99,7 +95,6 @@ fun TodoListContentLoadingPreview() {
             tasks = emptyList(),
             isLoading = true,
             onAddTask = {},
-            onEditMode = {},
             onTaskClick = {},
             onDismiss = {},
             modifier = Modifier.fillMaxSize()
@@ -115,7 +110,6 @@ fun TodoListContentPreviewLoadingDarkMode() {
             tasks = emptyList(),
             isLoading = true,
             onAddTask = {},
-            onEditMode = {},
             onTaskClick = {},
             onDismiss = {},
             modifier = Modifier.fillMaxSize()

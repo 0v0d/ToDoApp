@@ -4,6 +4,10 @@
     <string name="nav_label_add_task_title">タスク追加</string>
     <string name="nav_label_edit_task_title">タスク編集</string>
 
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">キャンセル</string>
+
+
     <string name="completed">完了</string>
     <string name="incomplete">未完了</string>
 

@@ -1,7 +1,7 @@
-package com.example.todoapp.repository
+package com.example.todoapp.data.repository
 
 import android.util.Log
-import com.example.todoapp.model.Task
+import com.example.todoapp.data.repository.model.Task
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import jakarta.inject.Singleton

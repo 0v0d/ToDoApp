@@ -1,4 +1,4 @@
-package com.example.todoapp.view
+package com.example.todoapp.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxSize

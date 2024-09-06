@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.todoapp.theme.AppTheme
-import com.example.todoapp.view.TodoApp
+import com.example.todoapp.ui.TodoApp
 import dagger.hilt.android.AndroidEntryPoint
 
 /** メイン画面 */
