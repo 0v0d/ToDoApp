@@ -31,3 +31,4 @@ google-services.json
 *.hprof
 app-release.dm
 /app/release/output-metadata.json
+/app/google-services.json.base64
