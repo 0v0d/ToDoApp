@@ -3,7 +3,7 @@ name: Static Analysis
 on:
   workflow_call:
     secrets:
-      GooglePlayServiceJson:
+      GOOGLE_SERVICES_JSON:
         required: true
 
 env:
