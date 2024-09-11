@@ -95,6 +95,8 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.gson)
 
+    implementation(libs.kotlinx.collections.immutable)
+
     // メモリリーク検出ライブラリ
     debugImplementation(libs.leakcanary)
 
@@ -102,6 +104,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // detektフォーマット
     detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.rules)
+    detektPlugins(libs.detekt.rules.twitter)
 
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
