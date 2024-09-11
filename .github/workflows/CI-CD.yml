@@ -15,6 +15,7 @@ jobs:
     uses: ./.github/workflows/call-static-analysis.yml
     secrets:
       API_KEY: ${{ secrets.API_KEY }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
 
   AutoMerge:
     needs: StaticAnalysis
