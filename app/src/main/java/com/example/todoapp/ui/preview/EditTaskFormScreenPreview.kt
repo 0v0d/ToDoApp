@@ -9,7 +9,7 @@ import com.example.todoapp.theme.AppTheme
 import com.example.todoapp.ui.component.TaskForm
 import java.util.Date
 
-val task = Task(
+private val task = Task(
     id = "1",
     title = "Task 1",
     description = "Description 1",
@@ -18,9 +18,10 @@ val task = Task(
     position = 0
 )
 
+@Suppress("UnusedPrivateMember")
 @Preview(showBackground = true)
 @Composable
-fun EditTaskFormPreview() {
+private fun EditTaskFormPreview() {
     AppTheme {
         TaskForm(
             onSaveClick = {},
@@ -30,9 +31,10 @@ fun EditTaskFormPreview() {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun EditTaskFormPreviewDarkMode() {
+private fun EditTaskFormPreviewDarkMode() {
     AppTheme(darkTheme = true) {
         TaskForm(
             onSaveClick = {},

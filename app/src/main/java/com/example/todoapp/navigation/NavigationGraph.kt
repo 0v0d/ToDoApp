@@ -9,35 +9,35 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.todoapp.data.repository.model.TaskDomain
+import com.example.todoapp.ui.TodoAppScreens
 import com.example.todoapp.ui.screen.AddTaskFromScreen
 import com.example.todoapp.ui.screen.EditTaskFormScreen
-import com.example.todoapp.ui.TodoAppScreen
 import com.example.todoapp.ui.screen.TodoListScreen
 import com.google.gson.Gson
 
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = TodoAppScreen.TaskList.name,
+        startDestination = TodoAppScreens.TaskList.name,
         modifier = modifier
     ) {
-        composable(TodoAppScreen.TaskList.name) {
+        composable(TodoAppScreens.TaskList.name) {
             TodoListScreen(
                 onAddTask = {
-                    navController.navigateSingleTopTo(TodoAppScreen.AddTask.name)
+                    navController.navigateSingleTopTo(TodoAppScreens.AddTask.name)
                 },
                 onTaskClick = { taskDomain ->
                     val taskJson = Uri.encode(Gson().toJson(taskDomain))
-                    navController.navigateSingleTopTo("${TodoAppScreen.EditTask.name}/$taskJson")
+                    navController.navigateSingleTopTo("${TodoAppScreens.EditTask.name}/$taskJson")
                 },
             )
         }
         composable(
-            route = "${TodoAppScreen.EditTask.name}/{taskJson}",
+            route = "${TodoAppScreens.EditTask.name}/{taskJson}",
             arguments = listOf(navArgument("taskJson") { type = NavType.StringType })
         ) { backStackEntry ->
             val taskJson = backStackEntry.arguments?.getString("taskJson")
@@ -46,14 +46,14 @@ fun NavigationGraph(
             EditTaskFormScreen(
                 task = task,
                 navigateToTodoListScreen = {
-                    navController.popBackStack(TodoAppScreen.TaskList.name, inclusive = false)
+                    navController.popBackStack(TodoAppScreens.TaskList.name, inclusive = false)
                 },
             )
         }
-        composable(route = TodoAppScreen.AddTask.name) {
+        composable(route = TodoAppScreens.AddTask.name) {
             AddTaskFromScreen(
                 navigateToTodoListScreen = {
-                    navController.popBackStack(TodoAppScreen.TaskList.name, inclusive = false)
+                    navController.popBackStack(TodoAppScreens.TaskList.name, inclusive = false)
                 },
             )
         }
@@ -65,4 +65,3 @@ private fun NavHostController.navigateSingleTopTo(route: String) =
         launchSingleTop = true
         restoreState = true
     }
-

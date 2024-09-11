@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.services)
-    alias(libs.plugins.androidx.navigation.safeargs)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.kapt)
@@ -95,6 +94,8 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     implementation(libs.gson)
 
+    implementation(libs.kotlinx.collections.immutable)
+
     // メモリリーク検出ライブラリ
     debugImplementation(libs.leakcanary)
 
@@ -102,6 +103,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     // detektフォーマット
     detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.rules)
+    detektPlugins(libs.detekt.rules.twitter)
 
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)

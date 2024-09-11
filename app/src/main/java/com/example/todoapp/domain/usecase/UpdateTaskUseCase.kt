@@ -1,7 +1,7 @@
 package com.example.todoapp.domain.usecase
 
-import com.example.todoapp.data.repository.model.Task
 import com.example.todoapp.data.repository.TaskRepository
+import com.example.todoapp.data.repository.model.Task
 import javax.inject.Inject
 
 class UpdateTaskUseCase @Inject constructor(

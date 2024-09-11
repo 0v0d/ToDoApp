@@ -22,15 +22,40 @@ import androidx.navigation.compose.rememberNavController
 import com.example.todoapp.R
 import com.example.todoapp.navigation.NavigationGraph
 
-enum class TodoAppScreen(@StringRes val title: Int) {
-    TaskList(title = R.string.nav_label_todo_list_title),
-    AddTask(title = R.string.nav_label_add_task_title),
-    EditTask(title = R.string.nav_label_edit_task_title)
+@Composable
+fun TodoApp(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route ?: TodoAppScreens.TaskList.name
+
+    val currentScreen = when {
+        currentRoute.startsWith(TodoAppScreens.EditTask.name) -> TodoAppScreens.EditTask
+        currentRoute == TodoAppScreens.AddTask.name -> TodoAppScreens.AddTask
+        else -> TodoAppScreens.TaskList
+    }
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            TodoAppBar(
+                currentScreen = currentScreen,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() }
+            )
+        }
+    ) { innerPadding ->
+        NavigationGraph(
+            navController = navController,
+            modifier = Modifier.fillMaxSize().padding(innerPadding)
+        )
+    }
 }
 
 @Composable
 fun TodoAppBar(
-    currentScreen: TodoAppScreen,
+    currentScreen: TodoAppScreens,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
@@ -54,31 +79,8 @@ fun TodoAppBar(
     )
 }
 
-@Composable
-fun TodoApp(
-    navController: NavHostController = rememberNavController()
-) {
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route ?: TodoAppScreen.TaskList.name
-
-    val currentScreen = when {
-        currentRoute.startsWith(TodoAppScreen.EditTask.name) -> TodoAppScreen.EditTask
-        currentRoute == TodoAppScreen.AddTask.name -> TodoAppScreen.AddTask
-        else -> TodoAppScreen.TaskList
-    }
-
-    Scaffold(
-        topBar = {
-            TodoAppBar(
-                currentScreen = currentScreen,
-                canNavigateBack = navController.previousBackStackEntry != null,
-                navigateUp = { navController.navigateUp() }
-            )
-        }
-    ) { innerPadding ->
-        NavigationGraph(
-            navController = navController,
-            modifier = Modifier.fillMaxSize().padding(innerPadding)
-        )
-    }
+enum class TodoAppScreens(@StringRes val title: Int) {
+    TaskList(title = R.string.nav_label_todo_list_title),
+    AddTask(title = R.string.nav_label_add_task_title),
+    EditTask(title = R.string.nav_label_edit_task_title)
 }

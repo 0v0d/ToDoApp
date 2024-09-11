@@ -10,5 +10,5 @@ data class Task(
     val description: String = "",
     val completed: Boolean = false,
     var dueDate: Date? = null,
-    val position : Int = 0
+    val position: Int = 0
 )

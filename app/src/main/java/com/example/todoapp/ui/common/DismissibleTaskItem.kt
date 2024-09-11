@@ -1,6 +1,5 @@
 package com.example.todoapp.ui.common
 
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -13,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +32,7 @@ fun <T> DismissibleItem(
     item: T,
     onDismiss: (String) -> Unit,
     idSelector: (T) -> String,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
     var offsetX by remember { mutableFloatStateOf(0f) }
@@ -42,7 +43,7 @@ fun <T> DismissibleItem(
         return
     }
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp)
             .clip(RoundedCornerShape(16.dp))
@@ -79,6 +80,7 @@ fun <T> DismissibleItem(
     }
 }
 
+private const val ICON_SCALE = 0.8f
 
 @Composable
 fun DismissBackground(
@@ -92,10 +94,10 @@ fun DismissBackground(
         contentAlignment = Alignment.CenterEnd
     ) {
         Icon(
+            modifier = Modifier.scale(ICON_SCALE),
             imageVector = Icons.Default.Delete,
             contentDescription = "Delete",
             tint = Color.White,
-            modifier = Modifier.scale(0.8f)
         )
     }
 }

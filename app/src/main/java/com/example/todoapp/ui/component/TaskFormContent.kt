@@ -19,42 +19,56 @@ import com.example.todoapp.utility.DateUtility
 import java.util.Date
 
 @Composable
-fun TaskTitleInput(title: String, onTitleChange: (String) -> Unit, titleError: Boolean) {
+fun TaskTitleInput(
+    title: String,
+    onTitleChange: (String) -> Unit,
+    titleError: Boolean,
+    modifier: Modifier = Modifier
+) {
     OutlinedTextField(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
         value = title,
         onValueChange = onTitleChange,
         label = { Text(stringResource(R.string.task_form_task_title)) },
         supportingText = {
             if (titleError) {
                 Text(
-                    text = "Title is required",
+                    text = stringResource(R.string.task_form_task_title_error),
                     color = MaterialTheme.colorScheme.error
                 )
             }
         },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 16.dp)
     )
 }
 
 @Composable
-fun TaskDescriptionInput(description: String, onDescriptionChange: (String) -> Unit) {
+fun TaskDescriptionInput(
+    description: String,
+    modifier: Modifier = Modifier,
+    onDescriptionChange: (String) -> Unit
+) {
     OutlinedTextField(
-        value = description,
-        onValueChange = onDescriptionChange,
-        label = { Text(stringResource(R.string.task_form_task_description)) },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(120.dp)
-            .padding(bottom = 16.dp)
+            .padding(bottom = 16.dp),
+        value = description,
+        onValueChange = onDescriptionChange,
+        label = { Text(stringResource(R.string.task_form_task_description)) }
     )
 }
 
 @Composable
-fun TaskDueDateSelector(dueDate: Date?, dateUtility: DateUtility, onDatePickerShow: () -> Unit) {
+fun TaskDueDateSelector(
+    dueDate: Date?,
+    dateUtility: DateUtility,
+    modifier: Modifier = Modifier,
+    onDatePickerShow: () -> Unit
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -78,9 +92,13 @@ fun TaskDueDateSelector(dueDate: Date?, dateUtility: DateUtility, onDatePickerSh
 }
 
 @Composable
-fun TaskCompletionCheckbox(completed: Boolean, onCompletedChange: (Boolean) -> Unit) {
+fun TaskCompletionCheckbox(
+    completed: Boolean,
+    onCompletedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -89,15 +107,18 @@ fun TaskCompletionCheckbox(completed: Boolean, onCompletedChange: (Boolean) -> U
             checked = completed,
             onCheckedChange = onCompletedChange
         )
-        Text(stringResource(R.string.task_form_task_completed))
+        Text(stringResource(R.string.common_completed))
     }
 }
 
 @Composable
-fun SaveTaskButton(onSaveClick: () -> Unit) {
+fun SaveTaskButton(
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Button(
+        modifier = modifier.fillMaxWidth(),
         onClick = onSaveClick,
-        modifier = Modifier.fillMaxWidth()
     ) {
         Text(stringResource(R.string.task_form_task_save))
     }

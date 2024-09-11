@@ -17,7 +17,6 @@ class EditTaskFormViewModel @Inject constructor(
         viewModelScope.launch {
             updateTaskUseCase(task)
             Log.d("EditTaskFormViewModel", "updateTask:$task")
-
         }
     }
 }

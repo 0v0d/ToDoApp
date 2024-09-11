@@ -7,8 +7,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.data.repository.model.TaskDomain
 import com.example.todoapp.theme.AppTheme
 import com.example.todoapp.ui.screen.TodoListContent
+import kotlinx.collections.immutable.toImmutableList
 
-val taskList = listOf(
+private val taskList = listOf(
     TaskDomain(
         id = "1",
         title = "Task 1",
@@ -25,11 +26,14 @@ val taskList = listOf(
         dueDate = "",
         position = 1
     ),
-)
+).toImmutableList()
 
+private val emptyList = emptyList<TaskDomain>().toImmutableList()
+
+@Suppress("UnusedPrivateMember")
 @Preview(showBackground = true)
 @Composable
-fun TodoListContentPreview() {
+private fun TodoListContentPreview() {
     AppTheme {
         TodoListContent(
             tasks = taskList,
@@ -42,9 +46,10 @@ fun TodoListContentPreview() {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun TodoListContentPreviewDarkMode() {
+private fun TodoListContentPreviewDarkMode() {
     AppTheme(darkTheme = true) {
         TodoListContent(
             tasks = taskList,
@@ -57,12 +62,13 @@ fun TodoListContentPreviewDarkMode() {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview(showBackground = true)
 @Composable
-fun TodoListContentNoItemPreview() {
+private fun TodoListContentNoItemPreview() {
     AppTheme {
         TodoListContent(
-            tasks = emptyList(),
+            tasks = emptyList,
             isLoading = false,
             onAddTask = {},
             onTaskClick = {},
@@ -72,12 +78,13 @@ fun TodoListContentNoItemPreview() {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun TodoListContentPreviewNoItemDarkMode() {
+private fun TodoListContentPreviewNoItemDarkMode() {
     AppTheme(darkTheme = true) {
         TodoListContent(
-            tasks = emptyList(),
+            tasks = emptyList,
             isLoading = false,
             onAddTask = {},
             onTaskClick = {},
@@ -87,12 +94,13 @@ fun TodoListContentPreviewNoItemDarkMode() {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview(showBackground = true)
 @Composable
-fun TodoListContentLoadingPreview() {
+private fun TodoListContentLoadingPreview() {
     AppTheme {
         TodoListContent(
-            tasks = emptyList(),
+            tasks = emptyList,
             isLoading = true,
             onAddTask = {},
             onTaskClick = {},
@@ -102,12 +110,13 @@ fun TodoListContentLoadingPreview() {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun TodoListContentPreviewLoadingDarkMode() {
+private fun TodoListContentPreviewLoadingDarkMode() {
     AppTheme(darkTheme = true) {
         TodoListContent(
-            tasks = emptyList(),
+            tasks = emptyList,
             isLoading = true,
             onAddTask = {},
             onTaskClick = {},

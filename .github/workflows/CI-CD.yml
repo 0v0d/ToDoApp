@@ -11,10 +11,15 @@ permissions:
   pull-requests: write
 
 jobs:
+  StaticAnalysis:
+    uses: ./.github/workflows/call-static-analysis.yml
+
   AutoMerge:
+    needs: StaticAnalysis
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    if: success()
     steps:
       - name: Auto Merge
         uses: pascalgn/automerge-action@v0.16.3

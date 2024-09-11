@@ -20,11 +20,11 @@ import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun TimePickerDialog(
-    modifier: Modifier = Modifier,
     confirmButton: @Composable () -> Unit,
     dismissButton: @Composable () -> Unit,
-    properties: DialogProperties = DialogProperties(),
     onDismissRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+    properties: DialogProperties = DialogProperties(),
     colors: DatePickerColors = DatePickerDefaults.colors(),
     content: @Composable () -> Unit
 ) {
@@ -56,4 +56,3 @@ fun TimePickerDialog(
         }
     }
 }
-
