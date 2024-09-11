@@ -37,6 +37,22 @@ jobs:
           GOOGLE_SERVICE: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE | base64 --decode --ignore-garbage > ./app/google-services.json
 
+      - name: Verify google-services.json decoding
+        run: |
+          echo "Verifying google-services.json decoding"
+          if [ -f app/google-services.json ]; then
+            echo "File size: $(wc -c < app/google-services.json) bytes"
+            echo "File permissions: $(ls -l app/google-services.json)"
+            jq empty app/google-services.json > /dev/null 2>&1
+            if [ $? -eq 0 ]; then
+              echo "google-services.json is valid JSON"
+            else
+              echo "Error: google-services.json is not valid JSON"
+            fi
+          else
+            echo "Error: google-services.json file not found"
+          fi
+
       - name: build
         run: |
           chmod +x ./gradlew
