@@ -2,6 +2,9 @@ name: Static Analysis
 
 on:
   workflow_call:
+    secrets:
+      GOOGLE_SERVICE_JSON:
+        required: true
 
 env:
   JAVA_VERSION: 17
@@ -29,25 +32,80 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run Lint
+      - name: Generate google-services.json
+        env:
+          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
+        run: echo $GOOGLE_SERVICE_JSON | base64 --decode --ignore-garbage > $GITHUB_WORKSPACE/app/google-services.json
+
+      - name: build
         run: |
           chmod +x ./gradlew
-          ./gradlew app:lintDebug --continue
-        continue-on-error: true
+          ./gradlew build
 
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run Lint
+        run: ./gradlew lintDebug --continue
 
       - name: Setup Reviewdog
         uses: reviewdog/action-setup@v1
         with:
           reviewdog_version: latest
 
-      - name: Run Reviewdog for Lint
+      - name: Run Reviewdog for Lint and Create Summary
+        if: always()
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          find . -regex '^.*/build/reports/lint-results.*\.sarif$' -type f | while read file_path; do
-            reviewdog -f=sarif -reporter=github-pr-review < "$file_path"
-          done
+          echo "## Android Lint Results" >> $GITHUB_STEP_SUMMARY
+          lint_files=$(find . -regex '^.*/build/reports/lint-results.*\.sarif$' -type f)
+          if [ -n "$lint_files" ]; then
+            for file_path in $lint_files; do
+              reviewdog -f=sarif -name="android-lint" -reporter=github-pr-review < "$file_path"
+
+              # サマリーに Lint の結果を追加
+              echo "Lint issues from $file_path:" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              jq -r '.runs[].results[] | .ruleId + ": " + .message.text' "$file_path" | sort | uniq -c | sort -nr >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+
+              total_issues=$(jq '.runs[].results | length' "$file_path")
+              echo "**Total Lint issues found: $total_issues**" >> $GITHUB_STEP_SUMMARY
+            done
+          else
+            echo "No Lint report found. Please check the Lint process." >> $GITHUB_STEP_SUMMARY
+          fi
 
       - name: Run Detekt
         run: ./gradlew detekt
+
+      - name: Run Reviewdog for Detekt and Create Summary
+        if: always()
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## Detekt Analysis Results" >> $GITHUB_STEP_SUMMARY
+          if [ -f ./build/reports/detekt/detekt.xml ]; then
+            # Reviewdog を使用して PR にコメントを追加
+            cat ./build/reports/detekt/detekt.xml | reviewdog -f=checkstyle -name="detekt" -reporter="github-pr-review"
+
+            # Detekt の結果を Actions の summary に追加
+            echo "Detekt found the following issues:" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat ./build/reports/detekt/detekt.xml | grep -oP '(?<=message=").*?(?=")' | sort | uniq -c | sort -nr >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+
+            # 総数を計算して追加
+            total_issues=$(cat ./build/reports/detekt/detekt.xml | grep -c "<error")
+            echo "**Total Detekt issues found: $total_issues**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Detekt report not found. Skipping Reviewdog and summary creation." >> $GITHUB_STEP_SUMMARY
+          fi

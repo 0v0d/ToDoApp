@@ -141,4 +141,5 @@ detekt {
     buildUponDefaultConfig = true
     autoCorrect = true // 自動でフォーマット
     basePath = rootDir.absolutePath
+    reportsDir = file("${rootProject.projectDir}/build/reports/detekt.xml")
 }
