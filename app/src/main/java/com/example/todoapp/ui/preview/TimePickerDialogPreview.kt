@@ -11,9 +11,10 @@ import com.example.todoapp.R
 import com.example.todoapp.ui.common.TimePickerDialog
 import java.util.Calendar
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun TimePickerDialogPreview() {
+private fun TimePickerDialogPreview() {
     val currentTime = Calendar.getInstance()
     val timePickerState = rememberTimePickerState(
         initialHour = currentTime.get(Calendar.HOUR_OF_DAY),

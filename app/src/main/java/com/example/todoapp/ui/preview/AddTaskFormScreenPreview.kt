@@ -7,9 +7,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.theme.AppTheme
 import com.example.todoapp.ui.component.TaskForm
 
+@Suppress("UnusedPrivateMember")
 @Preview(showBackground = true)
 @Composable
-fun AddTaskFormPreview() {
+private fun AddTaskFormPreview() {
     AppTheme {
         TaskForm(
             onSaveClick = {},
@@ -18,9 +19,10 @@ fun AddTaskFormPreview() {
     }
 }
 
+@Suppress("UnusedPrivateMember")
 @Preview
 @Composable
-fun AddTaskFormPreviewDarkMode() {
+private fun AddTaskFormPreviewDarkMode() {
     AppTheme(darkTheme = true) {
         TaskForm(
             onSaveClick = {},
@@ -28,4 +30,3 @@ fun AddTaskFormPreviewDarkMode() {
         )
     }
 }
-

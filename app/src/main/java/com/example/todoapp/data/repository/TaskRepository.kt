@@ -26,14 +26,14 @@ class TaskRepositoryImpl @Inject constructor(
 ) : TaskRepository {
     private val collectionPath = "tasks"
     private val collection = dataBase.collection(collectionPath)
-
+    private val orderBy = "position"
 
     override suspend fun saveTask(task: Task) {
         try {
             val newTask = task.copy(position = getNextPosition())
             collection.add(newTask).await()
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.d("TaskRepositoryImpl", "saveTask: Failed ${e.message}")
         }
     }
 
@@ -41,7 +41,7 @@ class TaskRepositoryImpl @Inject constructor(
         return flow {
             try {
                 val tasks = collection
-                    .orderBy("position")
+                    .orderBy(orderBy)
                     .get()
                     .await()
                     .toObjects(Task::class.java)
@@ -83,7 +83,6 @@ class TaskRepositoryImpl @Inject constructor(
             }
             batch.commit().await()
         } catch (e: Exception) {
-            e.printStackTrace()
             Log.e("TaskRepositoryImpl", "updateTaskOrder: Failed ${e.message}")
         }
     }
@@ -91,7 +90,7 @@ class TaskRepositoryImpl @Inject constructor(
     private suspend fun getNextPosition(): Int {
         return try {
             val tasks = collection
-                .orderBy("position", Query.Direction.DESCENDING)
+                .orderBy(orderBy, Query.Direction.DESCENDING)
                 .limit(1)
                 .get()
                 .await()
@@ -105,7 +104,7 @@ class TaskRepositoryImpl @Inject constructor(
     private suspend fun reorderRemainingTasks() {
         try {
             val tasks = collection
-                .orderBy("position")
+                .orderBy(orderBy)
                 .get()
                 .await()
                 .toObjects(Task::class.java)

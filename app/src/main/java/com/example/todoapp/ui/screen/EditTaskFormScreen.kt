@@ -10,12 +10,11 @@ import com.example.todoapp.viewmodel.EditTaskFormViewModel
 
 @Composable
 fun EditTaskFormScreen(
-    modifier: Modifier = Modifier,
     task: TaskDomain,
+    modifier: Modifier = Modifier,
     viewModel: EditTaskFormViewModel = hiltViewModel(),
     navigateToTodoListScreen: () -> Unit
 ) {
-
     TaskForm(
         modifier = modifier,
         onSaveClick = { newTask ->

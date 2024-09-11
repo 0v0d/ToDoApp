@@ -7,10 +7,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.todoapp.data.repository.model.Task
 import com.example.todoapp.utility.DateUtility
-import androidx.compose.ui.Modifier
 
 @Composable
 fun TaskForm(
@@ -61,7 +61,7 @@ fun TaskForm(
     if (showDatePicker) {
         TaskDatePicker(
             initialDate = taskFormState.dueDate,
-            onDateSelected = { selectedDate ->
+            onDateSelect = { selectedDate ->
                 taskFormState = taskFormState.copy(dueDate = selectedDate)
                 showDatePicker = false
                 showTimePicker = true
@@ -73,7 +73,7 @@ fun TaskForm(
     if (showTimePicker) {
         TaskTimePicker(
             initialDate = taskFormState.dueDate,
-            onTimeSelected = { selectedTime ->
+            onTimeSelect = { selectedTime ->
                 taskFormState = taskFormState.copy(dueDate = selectedTime)
                 showTimePicker = false
             },
@@ -81,5 +81,3 @@ fun TaskForm(
         )
     }
 }
-
-

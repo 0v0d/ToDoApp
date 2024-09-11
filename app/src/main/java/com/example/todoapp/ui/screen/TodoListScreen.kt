@@ -40,12 +40,14 @@ import com.example.todoapp.R
 import com.example.todoapp.data.repository.model.TaskDomain
 import com.example.todoapp.ui.common.DismissibleItem
 import com.example.todoapp.viewmodel.TodoListViewModel
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun TodoListScreen(
-    modifier: Modifier = Modifier,
     onAddTask: () -> Unit,
     onTaskClick: (TaskDomain) -> Unit,
+    modifier: Modifier = Modifier,
     viewModel: TodoListViewModel = hiltViewModel()
 ) {
     val loadingState by viewModel.loadingState.collectAsState()
@@ -56,7 +58,7 @@ fun TodoListScreen(
     }
 
     TodoListContent(
-        tasks = taskList,
+        tasks = taskList.toImmutableList(),
         isLoading = loadingState,
         onAddTask = onAddTask,
         onTaskClick = onTaskClick,
@@ -69,12 +71,12 @@ fun TodoListScreen(
 
 @Composable
 fun TodoListContent(
-    tasks: List<TaskDomain>,
+    tasks: ImmutableList<TaskDomain>,
     isLoading: Boolean,
     onAddTask: () -> Unit,
     onTaskClick: (TaskDomain) -> Unit,
     onDismiss: (String) -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier.padding(vertical = 8.dp),
@@ -92,7 +94,9 @@ fun TodoListContent(
             )
         } else {
             TaskList(
-                tasks = tasks, onTaskClick = onTaskClick, onDismiss = onDismiss
+                tasks = tasks,
+                onTaskClick = onTaskClick,
+                onDismiss = onDismiss
             )
         }
         ExtendedFloatingActionButton(
@@ -106,14 +110,16 @@ fun TodoListContent(
     }
 }
 
-
 @Composable
 fun TaskList(
-    tasks: List<TaskDomain>,
+    tasks: ImmutableList<TaskDomain>,
     onTaskClick: (TaskDomain) -> Unit,
-    onDismiss: (String) -> Unit
+    onDismiss: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    LazyColumn {
+    LazyColumn(
+        modifier = modifier.fillMaxWidth()
+    ) {
         items(tasks, key = { it.id }) { task ->
             DismissibleItem(
                 item = task,
@@ -132,10 +138,11 @@ fun TaskList(
 @Composable
 fun TaskItem(
     task: TaskDomain,
+    modifier: Modifier = Modifier,
     onClick: (TaskDomain) -> Unit,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(16.dp),
@@ -190,13 +197,23 @@ fun TaskItem(
 }
 
 @Composable
-fun StatusChip(completed: Boolean) {
+fun StatusChip(
+    completed: Boolean,
+    modifier: Modifier = Modifier,
+) {
     Surface(
+        modifier = modifier,
         shape = RoundedCornerShape(16.dp),
         color = if (completed) Color.Green else Color.Yellow
     ) {
         Text(
-            text = if (completed) "完了" else "進行中",
+            text = stringResource(
+                if (completed) {
+                    R.string.common_completed
+                } else {
+                    R.string.common_progressing
+                }
+            ),
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
             style = MaterialTheme.typography.labelSmall,
             color = Color.Black
