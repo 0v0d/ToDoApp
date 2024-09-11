@@ -13,8 +13,6 @@ permissions:
 jobs:
   StaticAnalysis:
     uses: ./.github/workflows/call-static-analysis.yml
-    secrets:
-      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
 
   AutoMerge:
     needs: StaticAnalysis
