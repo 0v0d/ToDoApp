@@ -39,18 +39,11 @@ jobs:
 
       - name: Verify google-services.json decoding
         run: |
-          echo "Verifying google-services.json decoding"
-          if [ -f app/google-services.json ]; then
-            echo "File size: $(wc -c < app/google-services.json) bytes"
-            echo "File permissions: $(ls -l app/google-services.json)"
-            jq empty app/google-services.json > /dev/null 2>&1
-            if [ $? -eq 0 ]; then
-              echo "google-services.json is valid JSON"
-            else
-              echo "Error: google-services.json is not valid JSON"
-            fi
+          if [ -z "$GOOGLE_SERVICES_JSON" ]; then
+            echo "Error: GOOGLE_SERVICES_JSON secret is empty"
           else
-            echo "Error: google-services.json file not found"
+            echo "GOOGLE_SERVICES_JSON secret is set (length: ${#GOOGLE_SERVICES_JSON} characters)"
+            echo "First 10 characters (should be base64): ${GOOGLE_SERVICES_JSON:0:10}"
           fi
 
       - name: build
