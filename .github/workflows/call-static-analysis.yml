@@ -3,7 +3,7 @@ name: Static Analysis
 on:
   workflow_call:
     secrets:
-      GOOGLE_SERVICE:
+      GOOGLE_SERVICE_JSON:
         required: true
 
 env:
@@ -34,17 +34,8 @@ jobs:
 
       - name: copy google-service
         env:
-          GOOGLE_SERVICE: ${{ secrets.GOOGLE_SERVICE_JSON }}
+          GOOGLE_SERVICE_JSON: ${{ secrets.GOOGLE_SERVICE_JSON }}
         run: echo $GOOGLE_SERVICE | base64 --decode --ignore-garbage > ./app/google-services.json
-
-      - name: Verify google-services.json decoding
-        run: |
-          if [ -z "$GOOGLE_SERVICES_JSON" ]; then
-            echo "Error: GOOGLE_SERVICES_JSON secret is empty"
-          else
-            echo "GOOGLE_SERVICES_JSON secret is set (length: ${#GOOGLE_SERVICES_JSON} characters)"
-            echo "First 10 characters (should be base64): ${GOOGLE_SERVICES_JSON:0:10}"
-          fi
 
       - name: build
         run: |
