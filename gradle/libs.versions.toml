@@ -33,7 +33,7 @@ navigationCompose = "2.8.2"
 hiltNavigationCompose = "1.2.0"
 lifecycleRuntimeKtx = "2.8.6"
 uiTestManifest = "1.7.3"
-uiTooling = "1.7.3"
+uiTooling = "1.7.4"
 detektVersion = "0.4.12"
 twitterDetekt = "0.0.26"
 
