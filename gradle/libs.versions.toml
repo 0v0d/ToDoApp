@@ -2,7 +2,7 @@
 agp = "8.7.3"
 coreTesting = "2.2.0"
 datastorePreferences = "1.1.2"
-detektFormatting = "1.23.7"
+detektFormatting = "1.23.8"
 firebaseBom = "33.9.0"
 gson = "2.12.1"
 kotlin = "2.1.10"
